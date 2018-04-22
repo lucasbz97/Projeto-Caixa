@@ -58,7 +58,6 @@ public class Produto {
                 }
                 retorno = aux.proximo;
                 aux.proximo = aux.proximo.proximo;
-                //aux.proximo = retorno.proximo;
                 if (aux.proximo == null) {
                     fim = aux;
                 }
@@ -67,6 +66,13 @@ public class Produto {
             }
         }
         return -1;
+    }
+    
+    public void addStack(int elemento){
+        if(!isEmpty()){
+            Node novo = new Node(elemento);
+            
+        }
     }
 }
 

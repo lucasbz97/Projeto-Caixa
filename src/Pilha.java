@@ -41,4 +41,10 @@ public class Pilha {
         }
         return -1;
     }
+    
+    public void pushInList(){
+        Produto p = new Produto();
+        
+        
+    }
 }
