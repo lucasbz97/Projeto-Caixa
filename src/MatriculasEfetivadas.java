@@ -3,81 +3,52 @@ LISTA DE MATRICULAS APROVADAS
  */
 public class MatriculasEfetivadas {
     
-    private Matricula inicio, fim;
-    private int quantidade;
-
-    public MatriculasEfetivadas() {
-        inicio = fim = null;
+    private int inicio;
+    private int quantidade,fim;
+    private int vet[];
+    
+    public MatriculasEfetivadas(int tamanho) {
+        inicio = fim = -1;
         quantidade = 0;
+        vet = new int [tamanho];
     }
 
     public boolean isEmpty() {
-        return inicio == null;
+        return inicio == -1;
     }
 
     public int size() {
-        return quantidade;
+        return quantidade ;
     }
-
+    
+    public boolean isFull(){
+        return quantidade == vet.length ;
+    }
     //if isEmpty mandar pra fila espera
-    public void add(Matricula matricula) {
-        if (indice >= 0 && indice <= quantidade) {
-            Matricula novo = new Matricula();
-            if (indice == 0) {
-                novo.proximo = inicio;
-                inicio = novo;
-                if (inicio.proximo == null) {
-                    fim = novo;
-                }
-            } else if (quantidade == indice) {
-                fim.proximo = novo;
-                fim = novo;
-            } else {
-                Matricula aux = inicio;
-                for (int i = 0; i < indice - 1; i++) {
-                    aux = aux.proximo;
-                }
-                novo.proximo = aux.proximo;
-                aux.proximo = novo;
-            }
-            quantidade++;
+    public void add(Matricula matricula, int indice) {
+        if(!isFull()){
+            
         }
+        
     }
     
     public int remove(int indice) {
-        if (indice >= 0 && indice < quantidade) {
-            quantidade--;
-            Matricula retorno = inicio;
-            if (indice == 0) {
-                inicio = inicio.proximo;
-                if (inicio == null) {
-                    fim = null;
-                }
-                retorno.proximo = null;
-                return retorno.elemento;
+        if(!isEmpty()&&indice>0&&indice < vet.length+1){
+            int aux = vet[indice];
+            if (quantidade == 1) {
+                inicio--;
             } else {
-                Matricula aux = inicio;
-                for (int i = 0; i < indice - 1; i++) {
-                    aux = aux.proximo;
+                for (int i = indice; i < fim; i++) {
+                    vet[i] = vet[i + 1];
                 }
-                retorno = aux.proximo;
-                aux.proximo = aux.proximo.proximo;
-                if (aux.proximo == null) {
-                    fim = aux;
-                }
-                retorno.proximo = null;
-                return retorno.elemento;
             }
+            fim--;
+            quantidade--;
+            return aux;
         }
         return -1;
-    }
-    
-    public void addStack(int elemento){
-        if(!isEmpty()){
-            Matricula novo = new Matricula(elemento);
             
-        }
+            }
+        
     }
 
-
-}
