@@ -12,10 +12,12 @@ public class FilaEspera {
     }
 
     public void enqueue(Matricula matricula) {
-        Matricula novo = new Matricula(matricula);
-        fim.proximo = novo;
-        fim = novo;
-        quantidade++;
+        if(quantidade == 0){
+            inicio = fim = matricula;
+        }else{
+         fim.proximo = matricula;
+         fim = matricula;
+        }
     }
 
     public Matricula dequeue() {
