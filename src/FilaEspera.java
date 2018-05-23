@@ -18,6 +18,7 @@ public class FilaEspera {
          fim.proximo = matricula;
          fim = matricula;
         }
+        quantidade++;
     }
 
     public Matricula dequeue() {

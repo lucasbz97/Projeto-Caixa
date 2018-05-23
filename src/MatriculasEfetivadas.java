@@ -5,12 +5,14 @@ public class MatriculasEfetivadas {
 
     private int inicio;
     private int quantidade, fim;
-    public Matricula vet[];
+    private Matricula vet[];
+    FilaEspera fila;
 
     public MatriculasEfetivadas(int tamanho) {
         this.inicio = this.fim = -1;
         this.quantidade = 0;
         this.vet = new Matricula[tamanho];
+        this.fila = new FilaEspera();
     }
 
     public boolean isEmpty() {
@@ -26,31 +28,34 @@ public class MatriculasEfetivadas {
     }
 
     //if isFull mandar pra fila espera
-    public void add(Matricula matricula, int indice) {
+    public void add(Matricula matricula) {
         if (!isFull()) {
-            if (!isFull() && indice >= 0 && indice <= quantidade) {
-                if (quantidade == 0) {
-                    vet[0] = matricula;
-                    inicio = fim = 0;
-                    System.out.println("foi inicio");
-                } else if (indice == fim + 1) {
-                    vet[indice] = matricula;
-                    fim = indice;
-                    System.out.println("foi no fim");
-                } else {
-                    for (int i = fim; i > indice - 1; i--) {
+            if (quantidade == 0) {
+                vet[0] = matricula;
+                inicio = fim = 0;
+            } else if (vet[fim].nome.toLowerCase().compareTo(matricula.nome.toLowerCase()) < 0 && vet[fim].nome.toLowerCase().compareTo(matricula.nome.toLowerCase()) != 0) {
+                vet[fim + 1] = matricula;
+                fim++;
+            } else {
+                int x = 0;
+                for (int i = fim; i > -1; i--) {
+                    if (vet[i].nome.toLowerCase().compareTo(matricula.nome.toLowerCase()) == 0) {
+                        if (Integer.parseInt(vet[i].ra) > Integer.parseInt(matricula.ra)) {
+                            vet[i + 1] = vet[i];
+                        }
+                        break;
+                    } else if (vet[i].nome.toLowerCase().compareTo(matricula.nome.toLowerCase()) > 0) {
                         vet[i + 1] = vet[i];
+                        x = i;
                     }
-                    fim++;
-                    vet[indice] = matricula;
-                    System.out.println("Foi no meio");
                 }
-                quantidade++;
+                fim++;
+                vet[x] = matricula;
             }
+
+            quantidade++;
         } else {
-            FilaEspera fila = new FilaEspera();
             fila.enqueue(matricula);
-            System.out.println("Mandou pra fila !");
         }
     }
 
@@ -60,20 +65,26 @@ public class MatriculasEfetivadas {
             if (quantidade == 1) {
                 inicio--;
             } else {
-                for (int i = indice; i < fim; i++) {
-                    vet[i] = vet[i + 1];
+                if (indice == fim) {
+                    vet[indice] = null;
+                } else {
+                    for (int i = indice; i < fim; i++) {
+                        vet[i] = vet[i + 1];
+                    }
                 }
             }
+            vet[fim] = null;
             fim--;
             quantidade--;
-            retorno(aux);
             return aux;
         }
         return null;
     }
 
-    public String retorno(Matricula matricula) {
-        Matricula matricul = new Matricula(matricula);
-        return matricul.nome;
+    public Matricula get(int indice) {
+        if (!isEmpty() && indice >= 0 && indice < quantidade) {
+            return vet[indice];
+        }
+        return new Matricula("null","null","null","null");
     }
 }
