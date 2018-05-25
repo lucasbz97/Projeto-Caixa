@@ -32,5 +32,8 @@ public class app {
         matEfet.add(matricula11);
         matEfet.add(matricula12);
         matEfet.add(matricula13);
+        
+        //System.out.println(matEfet.get(0).nome);
+        //System.out.println(matEfet.size());
     }
 }
